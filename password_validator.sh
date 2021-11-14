@@ -2,7 +2,7 @@
 # #Simple PASSWORD Generator
 
 valid=true
-NUM_REQUIRED=4
+NUM_REQUIRED=9
 green='\033[0;32m'
 red='\033[0;31m'
 reset='\u001b[0m'
