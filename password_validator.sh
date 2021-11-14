@@ -10,13 +10,13 @@
 # -ge # Greater than or equal
 # ----------------------------------------------------
 
+
 valid=true
-NUM_REQUIRED=10
+NUM_REQUIRED=4
 green='\033[0;32m'
 red='\033[0;31m'
-MESSAGE1="Your password must contain minimum 10 characters, "
-MESSAGE2="Your password must contain both alphabet and number, "
-MESSAGE3="Your password must include both loweer case and upper case letters"
+reset='\u001b[0m'
+NL=$'\n'
 RESULT=""
 echo "Hey dear user, we will check if your PASSWORD is valid."
 echo "Please write your PASSWORD: "
@@ -25,37 +25,31 @@ PASSWORD_leangth=${#PASSWORD}
 # # echo $PASSWORD_leangth
 
 # # PASSWORD contain minimum 10 characters              Working
-if  [[ $PASSWORD_leangth -ge $NUM_REQUIRED ]]; then
-    valid=true
-else
-    valid1=false
-    RESULT="$MESSAGE1"
+if  [[ $PASSWORD_leangth -le $NUM_REQUIRED ]]; then
+    valid=false
+    RESULT1="ERROR = Dear $(whoami), your password must contain minimum 10 characters${NL}" 
 fi
 
+
 # ## Contain both alphabet and number.                    Working
-if [[ $PASSWORD == *[[:digit:]]* ]] &&
-   [[ $PASSWORD == *[[:alpha:]]* ]]
-then
-    valid=true
+if  [[ "$PASSWORD" =~ [a-zA-Z] ]] && [[ "$PASSWORD" =~ [0-9] ]]; then
+        :
 else
-    valid2=false
-    RESULT="$MESSAGE1$MESSAGE2"
+        valid=false
+        RESULT2="ERROR = Dear $(whoami), your Password must contain numric AND alpha${NL}" 
 fi
+
 
 # ## Include both the small and capital case letters.      Working
 if  [[ $PASSWORD == ${PASSWORD,,} ]] ||
     [[ $PASSWORD == ${PASSWORD^^} ]]; then
-        valid3=false
-else
-        valid=true
-        RESULT="$MESSAGE1$MESSAGE2$MESSAGE3"
-
+        valid=false
+        RESULT3="ERROR = Dear $(whoami), your password must contain uppercase AND lowercase letters in the password${NL} " 
 fi
 
-if [[ $valid1 == true && $valid2 == true && $valid3 == false  ]]; then
+if [[ $valid == true  ]]; then
    echo -e "Your password is valid! ${green} ${PASSWORD} ${clear}!"
 else
-   echo -e "Your password is NOT valid! ${red} ${PASSWORD} !"
-   echo $RESULT
+   echo -e "Your password is NOT valid! ${red} ${PASSWORD} ${reset} !"
+   echo -e "$RESULT1\n$RESULT2\n$RESULT3"
 fi
-
