@@ -1,8 +1,18 @@
-# #!/usr/bin/bash
-# #Simple PASSWORD Generator
+#!/usr/bin/bash
+#Simple PASSWORD Generator
+
+# ---------------------------------------------------
+# -eq # Equal
+# -ne # Not equal
+# -lt # Less than
+# -le # Less than or equal
+# -gt # Greater than
+# -ge # Greater than or equal
+# ----------------------------------------------------
+
 
 valid=true
-NUM_REQUIRED=4
+NUM_REQUIRED=9
 green='\033[0;32m'
 red='\033[0;31m'
 reset='\u001b[0m'
@@ -12,15 +22,16 @@ echo "Hey dear user, we will check if your PASSWORD is valid."
 echo "Please write your PASSWORD: "
 read PASSWORD
 PASSWORD_leangth=${#PASSWORD}
+# # echo $PASSWORD_leangth
 
-# PASSWORD contain minimum 10 characters              Working
+# # PASSWORD contain minimum 10 characters              Working
 if  [[ $PASSWORD_leangth -le $NUM_REQUIRED ]]; then
     valid=false
     RESULT1="ERROR = Dear $(whoami), your password must contain minimum 10 characters${NL}" 
 fi
 
 
-## Contain both alphabet and number.                    Working
+# ## Contain both alphabet and number.                    Working
 if  [[ "$PASSWORD" =~ [a-zA-Z] ]] && [[ "$PASSWORD" =~ [0-9] ]]; then
         :
 else
@@ -29,7 +40,7 @@ else
 fi
 
 
-## Include both the small and capital case letters.      Working
+# ## Include both the small and capital case letters.      Working
 if  [[ $PASSWORD == ${PASSWORD,,} ]] ||
     [[ $PASSWORD == ${PASSWORD^^} ]]; then
         valid=false
